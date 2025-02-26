@@ -1,14 +1,12 @@
----
-
 # 🔐 Password Analyzer  
 
 ## 📌 Overview  
 **Password Analyzer** is a Python-based tool that evaluates password strength using **entropy calculation**, **dictionary-based weak password detection**, and **data breach checks** using the **Have I Been Pwned API**.  
 
 ### ✨ Features  
-✅ **Entropy-Based Strength Evaluation** – Calculates password entropy and classifies security levels.  
-✅ **Weak Password Detection** – Checks if the password is commonly used (from a dictionary file).  
-✅ **Data Breach Check** – Uses the Have I Been Pwned API to detect if the password has been leaked and shows **breach count**.  
+👉 **Entropy-Based Strength Evaluation** – Calculates password entropy and classifies security levels.  
+👉 **Weak Password Detection** – Checks if the password is commonly used (from a dictionary file).  
+👉 **Data Breach Check** – Uses the Have I Been Pwned API to detect if the password has been leaked and shows **breach count**.  
 
 ---
 
@@ -35,7 +33,7 @@ pip install requests
 
 ### 3️⃣ **Download the Weak Password List**  
 For **weak password detection**, download a common password list like:  
-🔗 [Top 10 million passwords dataset](https://github.com/danielmiessler/SecLists)  
+📚 [Top 10 million passwords dataset](https://github.com/danielmiessler/SecLists)  
 
 Save it as:  
 ```plaintext
@@ -45,7 +43,7 @@ Place the file in the **same directory** as the script.
 
 ---
 
-## 🏃 Usage  
+## 🏋️ Usage  
 Run the script using:  
 ```bash
 python password_analyzer.py
@@ -74,7 +72,7 @@ Enter a password to analyze: password123
 | 36 - 59          | ✅ Moderate (Decent Security) |
 | ≥ 60            | 🔒 Strong (Difficult to Crack) |
 
-🔹 **Higher entropy means a stronger password!**  
+👉 **Higher entropy means a stronger password!**  
 
 ---
 
@@ -93,4 +91,3 @@ Enter a password to analyze: password123
 
 **⚠️ Disclaimer:** This project is intended for **educational purposes only**. The author is **not responsible** for any misuse of this tool. Always follow ethical security practices.  
 
----
