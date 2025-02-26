@@ -17,8 +17,11 @@ def check_password_leaks(password):
     sha1_hash = hashlib.sha1(password.encode()).hexdigest().upper()
     prefix, suffix = sha1_hash[:5], sha1_hash[5:]
     response = requests.get(f"https://api.pwnedpasswords.com/range/{prefix}")
-    if suffix in response.text:
-        return "⚠️ Your password has been leaked in data breach!"
+    response_lines = response.text.splitlines()
+    for line in response_lines:
+        hash_suffix, count = line.split(":")
+        if hash_suffix == suffix:
+            return f"⚠️ Your password has been leaked **{int(count):,} times** in data breaches!"
     return "✅ Your password is safe"
 
 def evaluate_password_using_entropy_strength(password):
