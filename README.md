@@ -1,5 +1,3 @@
-Here’s the **updated README** with your requested modifications:  
-
 ---
 
 # 🔐 Password Analyzer  
@@ -96,5 +94,3 @@ Enter a password to analyze: password123
 **⚠️ Disclaimer:** This project is intended for **educational purposes only**. The author is **not responsible** for any misuse of this tool. Always follow ethical security practices.  
 
 ---
-
-Let me know if you need any more changes! 🚀
