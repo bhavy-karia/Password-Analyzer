@@ -1,5 +1,6 @@
 import re
 import hashlib, requests
+import math
 
 def load_weak_passwords(filename="10-million-password-list-top-1000000.txt"):
     try:
@@ -20,22 +21,33 @@ def check_password_leaks(password):
         return "⚠️ Your password has been leaked in data breach!"
     return "✅ Your password is safe"
 
-def check_password_strength(password):
-    score = 0
-    criteria = {
-        "length" : len(password) >= 8,
-        "upercase" : bool(re.search(r"[A-Z]", password)),
-        "lowercase" : bool(re.search(r"[a-z]", password)),
-        "digit" : bool(re.search(r"\d", password)),
-        "special_char" : bool(re.search(r"[!@#$%^&*(),.?\":{}|<>]", password))
-    }
-    score = sum(criteria.values())
-    if score == 5:
-        return "✅ Strong Password"
-    elif score >= 3:
-        return "⚠️ Medium Password"
+def evaluate_password_using_entropy_strength(password):
+    L = len(password)
+    N = 0
+
+    if any(c.islower() for c in password):
+        N += 26
+    if any(c.isupper() for c in password):
+        N += 26
+    if any(c.isdigit() for c in password):
+        N += 10
+    if any(c in "!@#$%^&*(),.?\":{}|<>" for c in password):
+        N +=32
+    if N == 0:
+        return 0, "❌ Invalid Password (No characters detected)"
+    
+    entropy = round(L * math.log2(N), 2)
+
+    if entropy < 28:
+        strength = "❌ Very Weak Password (Easily Cracked)"
+    elif entropy < 36:
+        strength = "⚠️ Weak Password (Guessable)"
+    elif entropy < 60:
+        strength = "✅ Moderate Password (Decent Security)"
     else:
-        return "❌ Weak Password"
+        strength = "🔒 Strong Password (Difficult to Crack)"
+    
+    return entropy, strength
 
 if __name__ == "__main__":
     password = input("Enter a password to analyze: ")
@@ -44,6 +56,8 @@ if __name__ == "__main__":
     if is_weak_password(password, weak_passwords):
         print("❌ Your password is too common and weak")
     else:
-        print(check_password_strength(password))
+        entropy, strength = evaluate_password_using_entropy_strength(password)
+        print(f"🔐 Password Entropy {entropy} bits")
+        print(strength)
     
     print(check_password_leaks(password))
