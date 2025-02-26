@@ -1,4 +1,13 @@
 import re
+import hashlib, requests
+
+def check_password_leaks(password):
+    sha1_hash = hashlib.sha1(password.encode()).hexdigest().upper()
+    prefix, suffix = sha1_hash[:5], sha1_hash[5:]
+    response = requests.get(f"https://api.pwnedpasswords.com/range/{prefix}")
+    if suffix in response.text:
+        return "Your password has been leaked in data breach!"
+    return "Your password is safe"
 
 def check_password_strength(password):
     score = 0
@@ -20,3 +29,4 @@ def check_password_strength(password):
 if __name__ == "__main__":
     password = input("Enter a password to analyze: ")
     print(check_password_strength(password))
+    print(check_password_leaks(password))
